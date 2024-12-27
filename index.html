@@ -118,11 +118,25 @@
   <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-dash/dist/videojs-dash.min.js"></script>
 
   <script>
-    // Video.js DASH setup
+    // DASH Stream URL and ClearKey DRM Configuration
+    const streamUrl = "https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd";
+    const drmKeys = {
+      "4e993aa8c1f295f8b94e8e9e6f6d0bfe": "86a1ed6e96caab8eb1009fe530d2cf4f", // keyId: key
+    };
+
+    // Initialize Video.js Player with DRM
     const player = videojs('video');
     player.src({
-      src: 'https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd',
+      src: streamUrl,
       type: 'application/dash+xml',
+      keySystemOptions: [
+        {
+          name: 'org.w3.clearkey',
+          options: {
+            keys: drmKeys, // Add ClearKey DRM keys here
+          },
+        },
+      ],
     });
 
     // Show popup on page load
